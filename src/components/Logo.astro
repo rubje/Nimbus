@@ -54,7 +54,7 @@ const width = Math.round((w / h) * height);
   :global(a:hover) > .logo .logo__trails, :global(a:focus-visible) > .logo .logo__trails, .logo:hover .logo__trails {
     animation: logo-trail 0.9s var(--ease) infinite alternate;
   }
-  /* Intro: on the first page of a visit the propellers flap and the trails swoosh twice
+  /* Intro: on every page load the propellers flap and the trails swoosh twice
      (class added by src/scripts/main.ts). */
   .logo--intro .logo__props { animation: logo-flap 0.6s cubic-bezier(0.36, 0, 0.3, 1.4) 0.5s 2; }
   .logo--intro .logo__trails { animation: logo-swoosh 0.6s var(--ease) 0.5s 2; }

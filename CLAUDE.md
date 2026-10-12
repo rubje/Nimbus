@@ -31,7 +31,7 @@ Portfolio site for Ruben's FPV drone videography business (hotels, real estate, 
 - Colours in `src/styles/global.css`: petrol `#0B3C49`, orange `#FF6A1A` (`--orange-text #FF7F3A` for small text, AA), off-white `#F4F1EC`, near-black `--black #030809`. Premium dark look: black sections, film grain (`body::after`), glows, card shadows.
 - Fonts self-hosted: **Outfit** for headings/logo (Sora's "Y" looked bent at display sizes), **Sora** for body.
 - Logo: traced to vectors from the user's JPG (`nimbus.jfif` in OneDrive Pictures). Paths are in `src/components/logo-paths.ts` (generated; parts: mark/word/props/trails/tagline). Files in `public/brand/`, favicon/app icons/manifest in `public/`, OG image `public/og/default.jpg` (Madeira + logo).
-- Logo animation: propellers spin on hover; on the **first page of a visit** they flap twice (`logo--intro` class added in `main.ts`, sessionStorage key `nimbus-logo-intro`); disabled for reduced motion.
+- Logo animation: propellers spin on hover; on **every page load** they flap twice (`logo--intro` class added in `main.ts`; the user wants it on reload too); disabled for reduced motion.
 - Accessibility/perf baseline: Lighthouse mobile 98–100 on all categories. Keep heading order valid (ServiceCard has `headingLevel`).
 
 ## Working notes
