@@ -86,6 +86,7 @@ export default {
     included: 'Inbegrepen',
     idealFor: 'Ideaal voor',
     soon: 'Binnenkort',
+    more: 'Meer info',
     processTitle: 'Hoe het werkt',
     ctaButton: 'Vraag een offerte aan',
   },

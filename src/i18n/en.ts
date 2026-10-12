@@ -88,6 +88,7 @@ const en: typeof nl = {
     included: 'Included',
     idealFor: 'Ideal for',
     soon: 'Coming soon',
+    more: 'Learn more',
     processTitle: 'How it works',
     ctaButton: 'Request a quote',
   },
