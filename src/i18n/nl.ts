@@ -12,7 +12,7 @@ export default {
     },
     services: {
       title: 'Diensten',
-      description: 'FPV fly-throughs voor hotels, vastgoed walkthroughs en binnenkort event- en concertbeelden. Wat je krijgt en hoe het werkt.',
+      description: 'FPV fly-throughs voor hotels, vastgoed walkthroughs, bruiloften en binnenkort event- en concertbeelden. Wat je krijgt en hoe het werkt.',
     },
     about: {
       title: 'Over',
@@ -114,7 +114,7 @@ export default {
     lead: 'Vertel me over je locatie en wat je ermee wilt bereiken. Ik reageer binnen twee werkdagen.',
     quoteTitle: 'Zo vraag je een offerte aan',
     quoteSteps: [
-      'Type locatie (hotel, woning, event) en de plaats.',
+      'Type locatie (hotel, woning, bruiloft, event) en de plaats.',
       'Globale grootte of aantal ruimtes dat in beeld moet.',
       'Waar de video komt: website, social, Funda, campagne.',
       'Gewenste opnamedatum of deadline.',
@@ -125,7 +125,7 @@ export default {
       email: 'E-mailadres',
       company: 'Bedrijf (optioneel)',
       type: 'Soort project',
-      typeOptions: ['Hotel', 'Vastgoed', 'Event / concert', 'Anders'],
+      typeOptions: ['Hotel', 'Vastgoed', 'Bruiloft', 'Event / concert', 'Anders'],
       date: 'Gewenste datum (optioneel)',
       message: 'Bericht',
       submit: 'Verstuur aanvraag',

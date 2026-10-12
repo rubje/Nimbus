@@ -22,7 +22,7 @@ const t = useTranslations(lang);
   </section>
 
   <section class="container section services" style="padding-top: 0">
-    {services.map((s, i) => <ServiceCard service={s} lang={lang} index={i} detailed />)}
+    {services.map((s, i) => <ServiceCard service={s} lang={lang} index={i} detailed headingLevel="h2" />)}
   </section>
 
   <section class="section section--deep" aria-labelledby="process-title">
@@ -54,6 +54,7 @@ const t = useTranslations(lang);
   .process__num {
     display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%;
     border: 1.5px solid var(--orange); color: var(--orange-text); font-weight: 600; margin-bottom: 1.25rem;
+    box-shadow: 0 0 24px -4px rgb(255 106 26 / 0.45); background: var(--black);
   }
   .process p { color: var(--muted); }
 </style>

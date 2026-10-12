@@ -1,7 +1,7 @@
 /**
  * Portfolio videos. To add a video:
  *  1. Copy the ID from the YouTube URL: youtube.com/watch?v=THIS_PART
- *  2. Add an object below. `featured: true` also shows it on the home page.
+ *  2. Add an object below. `featured: true` also shows it on the home page (max 4).
  *  3. Optional `start` = start time in seconds (like &t=57s).
  *  4. Optional `thumbnail` = a file in /public (e.g. '/thumbs/hotel.jpg').
  *     Without it, the YouTube thumbnail is used.
@@ -63,6 +63,7 @@ export const videos: Video[] = [
   {
     youtubeId: '-ZX2yu7T9zk',
     category: 'landscapes',
+    featured: true,
     start: 57,
     year: 2025,
     location: 'IJsland',

@@ -51,11 +51,11 @@ const items: RouteKey[] = ['work', 'services', 'about', 'contact'];
   .site-header { position: sticky; top: 0; z-index: 50; }
   .site-header::before {
     content: ''; position: absolute; inset: 0; z-index: -1;
-    background: rgb(11 60 73 / 0.92); backdrop-filter: blur(10px);
+    background: linear-gradient(180deg, rgb(3 8 9 / 0.88), rgb(6 29 36 / 0.78)); backdrop-filter: blur(14px) saturate(1.2);
     border-bottom: 1px solid var(--line); transition: opacity 0.4s;
   }
   .site-header--overlay { position: fixed; inset: 0 0 auto; }
-  .site-header--overlay::before { opacity: 0; background: rgb(7 43 53 / 0.92); }
+  .site-header--overlay::before { opacity: 0; }
   .site-header--overlay:global(.is-scrolled)::before { opacity: 1; }
   .site-header__inner { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
   .site-header__logo { text-decoration: none; color: var(--offwhite); }
@@ -89,7 +89,7 @@ const items: RouteKey[] = ['work', 'services', 'about', 'contact'];
     .nav-toggle[aria-expanded='true'] .nav-toggle__bars::after { transform: translateY(-7px) rotate(-45deg); }
 
     .site-nav {
-      position: fixed; inset: 0; background: var(--petrol-deep); flex-direction: column; justify-content: center;
+      position: fixed; inset: 0; background: radial-gradient(600px 400px at 50% 0%, rgb(18 80 95 / 0.5), transparent 70%), var(--black); flex-direction: column; justify-content: center;
       gap: 2.5rem; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
     }
     .site-nav.is-open { opacity: 1; visibility: visible; }

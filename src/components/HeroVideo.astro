@@ -55,9 +55,18 @@ const hasPosterWebp = has('video/hero-poster-960.webp') && has('video/hero-poste
   .hero__poster, .hero__video { object-fit: cover; }
   .hero__video { opacity: 0; transition: opacity 1.2s var(--ease); }
   .hero__video.is-playing { opacity: 1; }
-  .hero__shade { background: linear-gradient(180deg, rgb(7 43 53 / 0.35) 0%, rgb(7 43 53 / 0.15) 40%, rgb(11 60 73 / 0.92) 100%); }
+  .hero__shade {
+    background:
+      radial-gradient(ellipse 120% 90% at 50% 40%, transparent 45%, rgb(3 8 9 / 0.7) 100%),
+      linear-gradient(180deg, rgb(3 8 9 / 0.65) 0%, rgb(3 8 9 / 0.1) 30%, rgb(3 8 9 / 0.35) 65%, var(--petrol) 100%);
+  }
+  /* Thin orange horizon line at the bottom of the hero. */
+  .hero::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; z-index: 1;
+    background: linear-gradient(90deg, transparent, rgb(255 106 26 / 0.5), transparent);
+  }
   .hero__content { padding-block: 8rem var(--space-l); }
-  .hero__title { font-size: var(--step-4); max-width: 14ch; margin-bottom: 0.4em; }
-  .hero__lead { font-size: var(--step-1); font-weight: 300; max-width: 40ch; color: var(--offwhite); }
+  .hero__title { font-size: var(--step-4); max-width: 14ch; margin-bottom: 0.4em; filter: drop-shadow(0 4px 30px rgb(0 0 0 / 0.45)); }
+  .hero__lead { font-size: var(--step-1); font-weight: 300; max-width: 40ch; color: var(--offwhite); text-shadow: 0 2px 20px rgb(0 0 0 / 0.5); }
   .hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
 </style>

@@ -18,7 +18,18 @@ const t = useTranslations(lang);
 </section>
 
 <style>
-  .cta { background: radial-gradient(120% 120% at 100% 0%, rgb(255 106 26 / 0.16), transparent 55%), var(--petrol-deep); }
+  .cta {
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(600px 300px at 50% 100%, rgb(255 106 26 / 0.22), transparent 70%),
+      radial-gradient(900px 500px at 50% 0%, rgb(18 80 95 / 0.45), transparent 70%),
+      var(--black);
+    border-top: 1px solid rgb(255 255 255 / 0.05);
+  }
+  .cta::before {
+    content: ''; position: absolute; left: 50%; top: 0; width: min(600px, 80%); height: 1px; transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, rgb(255 106 26 / 0.6), transparent);
+  }
   .cta__inner { text-align: center; display: flex; flex-direction: column; align-items: center; padding-block: var(--space-m); }
   .cta__inner h2 { max-width: 18ch; }
   .cta__inner .lead { margin-bottom: 2rem; }

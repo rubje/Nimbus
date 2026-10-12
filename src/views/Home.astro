@@ -14,7 +14,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const featured = videos.filter((v) => v.featured).slice(0, 3);
+const featured = videos.filter((v) => v.featured).slice(0, 4);
 ---
 
 <Base lang={lang} route="home" title={t.meta.home.title} description={t.meta.home.description} overlayHeader>
@@ -37,7 +37,7 @@ const featured = videos.filter((v) => v.featured).slice(0, 3);
         <a class="link-arrow" href={path('work', lang)}>{t.home.featuredAll}</a>
       </div>
       <div class="featured__grid">
-        {featured.map((v, i) => <VideoCard video={v} lang={lang} large={i === 0} />)}
+        {featured.map((v) => <VideoCard video={v} lang={lang} large />)}
       </div>
     </div>
   </section>
@@ -63,11 +63,8 @@ const featured = videos.filter((v) => v.featured).slice(0, 3);
   .intro__grid .lead { color: var(--offwhite); opacity: 0.9; }
 
   .featured__grid { display: grid; gap: var(--space-m) var(--space-s); }
-  @media (min-width: 900px) {
-    .featured__grid { grid-template-columns: 1.6fr 1fr; grid-template-rows: auto auto; }
-    .featured__grid > :global(:first-child) { grid-row: span 2; }
-  }
+  @media (min-width: 700px) { .featured__grid { grid-template-columns: repeat(2, 1fr); } }
 
   .services__grid { display: grid; gap: var(--space-s); }
-  @media (min-width: 900px) { .services__grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 700px) { .services__grid { grid-template-columns: repeat(2, 1fr); } }
 </style>

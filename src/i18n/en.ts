@@ -14,7 +14,7 @@ const en: typeof nl = {
     },
     services: {
       title: 'Services',
-      description: 'FPV fly-throughs for hotels, real estate walkthroughs and, soon, event and concert footage. What you get and how it works.',
+      description: 'FPV fly-throughs for hotels, real estate walkthroughs, weddings and, soon, event and concert footage. What you get and how it works.',
     },
     about: {
       title: 'About',
@@ -116,7 +116,7 @@ const en: typeof nl = {
     lead: 'Tell me about your location and what you want to achieve. I reply within two working days.',
     quoteTitle: 'How to request a quote',
     quoteSteps: [
-      'Type of location (hotel, property, event) and the town or city.',
+      'Type of location (hotel, property, wedding, event) and the town or city.',
       'Approximate size, or the number of spaces to cover.',
       'Where the film will be used: website, social, listings, campaign.',
       'Preferred shoot date or deadline.',
@@ -127,7 +127,7 @@ const en: typeof nl = {
       email: 'Email',
       company: 'Company (optional)',
       type: 'Project type',
-      typeOptions: ['Hotel', 'Real estate', 'Event / concert', 'Other'],
+      typeOptions: ['Hotel', 'Real estate', 'Wedding', 'Event / concert', 'Other'],
       date: 'Preferred date (optional)',
       message: 'Message',
       submit: 'Send request',

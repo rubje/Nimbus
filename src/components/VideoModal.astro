@@ -22,9 +22,9 @@ const t = useTranslations(Astro.props.lang);
 
 <style>
   .video-modal { width: min(100% - 2rem, 1200px); padding: 0; border: 0; background: transparent; color: var(--offwhite); overflow: visible; }
-  .video-modal::backdrop { background: rgb(4 24 30 / 0.92); backdrop-filter: blur(6px); }
+  .video-modal::backdrop { background: radial-gradient(ellipse at center, rgb(6 29 36 / 0.9), rgb(1 3 4 / 0.97)); backdrop-filter: blur(8px); }
   .video-modal[open] { animation: modal-in 0.4s var(--ease); }
-  .video-modal__frame { aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius); overflow: hidden; }
+  .video-modal__frame { aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius); overflow: hidden; box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08), 0 40px 120px -20px rgb(0 0 0 / 0.9), 0 0 120px -40px rgb(255 106 26 / 0.35); }
   .video-modal__frame :global(iframe) { width: 100%; height: 100%; border: 0; }
   .video-modal__close {
     position: absolute; top: -3.25rem; right: 0; width: 44px; height: 44px; border-radius: 50%;

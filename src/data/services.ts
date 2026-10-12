@@ -54,6 +54,26 @@ export const services: Service[] = [
     },
   },
   {
+    id: 'weddings',
+    status: 'available',
+    title: { nl: 'Bruiloften', en: 'Weddings' },
+    summary: {
+      nl: 'Eén vlucht door je hele dag: van de ceremonie naar de feestzaal, langs de gasten en de tafels. Ingetogen en dichtbij, zonder dat het ooit stoort. Als aanvulling op je fotograaf of videograaf, of als losse highlight.',
+      en: 'One flight through your whole day: from the ceremony to the reception, past the guests and the tables. Discreet and close up, without ever getting in the way. Alongside your photographer or videographer, or as a standalone highlight.',
+    },
+    included: [
+      { nl: 'Locatiecheck en afstemming met trouwlocatie', en: 'Venue check and coordination with the venue' },
+      { nl: 'Afstemming met je fotograaf en videograaf', en: 'Coordination with your photographer and videographer' },
+      { nl: 'Doorlopende fly-through van ceremonie en feest', en: 'Continuous fly-through of ceremony and party' },
+      { nl: 'Highlight-film (1–2 min) in 4K, plus verticale versie', en: 'Highlight film (1–2 min) in 4K, plus a vertical cut' },
+      { nl: 'Ruwe beelden op aanvraag voor je videograaf', en: 'Raw footage on request for your videographer' },
+    ],
+    idealFor: {
+      nl: 'Bruidsparen, weddingplanners, trouwlocaties en videografen.',
+      en: 'Couples, wedding planners, venues and videographers.',
+    },
+  },
+  {
     id: 'events',
     status: 'soon',
     title: { nl: 'Events en concerten', en: 'Events and concerts' },
