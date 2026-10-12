@@ -218,7 +218,7 @@ public/
 - [x] **Logo:** done (traced from your artwork). Optional: replace with the designer's original SVG for the cleanest curves.
 - [ ] **Hero video:** `public/video/hero.mp4` (+ poster), see the specs above
 - [x] **OG image:** Madeira still + logo. Swap for your favourite frame if you like.
-- [ ] **Formspree form ID** in `src/config/site.ts` (the form won't send until this is set)
+- [x] **Formspree form ID:** set (`mnpjbgnb`)
 - [ ] **Domain:** nameservers switched to Cloudflare. When the zone is Active, add the custom domains on the `nimbus` worker (see Deploying).
 - [ ] **TransIP owner details:** company name still says "Hyland". Change it under Gegevens beheren.
 - [ ] **Copy review:** check the bio, services, prices/inclusions and delivery times in `src/i18n/*.ts` and `src/data/services.ts`
