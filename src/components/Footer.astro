@@ -1,5 +1,4 @@
 ---
-import Logo from './Logo.astro';
 import { site } from '../config/site';
 import { useTranslations, path, type Lang, type RouteKey } from '../i18n/utils';
 
@@ -16,7 +15,7 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="container site-footer__grid">
     <div>
-      <Logo />
+      <img class="site-footer__logo" src="/brand/nimbus-logo-dark-bg.svg" alt={site.legalName} width="222" height="48" loading="lazy" decoding="async" />
       <p class="site-footer__tagline">{t.footer.tagline}</p>
       <p class="site-footer__meta">{t.footer.based} {site.city}, {t.footer.serving}.</p>
     </div>
@@ -45,7 +44,8 @@ const year = new Date().getFullYear();
   .site-footer { background: linear-gradient(180deg, var(--black), #010304); padding-block: var(--space-l) var(--space-m); border-top: 1px solid rgb(255 255 255 / 0.06); font-size: 0.95rem; }
   .site-footer__grid { display: grid; gap: var(--space-m); grid-template-columns: 1fr; }
   @media (min-width: 760px) { .site-footer__grid { grid-template-columns: 2fr 1fr 1fr; } }
-  .site-footer__tagline { margin-top: 1rem; color: var(--offwhite); }
+  .site-footer__logo { height: 48px; width: auto; }
+  .site-footer__tagline { margin-top: 1.25rem; color: var(--offwhite); }
   .site-footer__meta { color: var(--muted); }
   .site-footer ul { display: grid; gap: 0.6rem; }
   .site-footer a { text-decoration: none; color: var(--muted); }

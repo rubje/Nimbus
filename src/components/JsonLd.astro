@@ -23,7 +23,7 @@ const business: Record<string, unknown> = {
   url: site.url,
   email: site.email,
   image: new URL(site.ogImage, site.url).href,
-  logo: new URL('/favicon.svg', site.url).href,
+  logo: new URL('/brand/nimbus-logo-512.png', site.url).href,
   address: {
     '@type': 'PostalAddress',
     addressLocality: site.city,

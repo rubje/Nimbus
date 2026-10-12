@@ -68,9 +68,20 @@ The thumbnail is downloaded from YouTube at build time and served from your own 
 
 **How embeds work:** no YouTube code loads until the visitor clicks play. The video then opens in a pop-up player using `youtube-nocookie.com` (privacy-enhanced mode). Without JavaScript, the card simply links to YouTube.
 
-## Replacing the logo
+## Logo and brand files
 
-Open `src/components/Logo.astro` and replace the `<svg>…</svg>` with your own SVG markup, or put `logo.svg` in `public/` and use `<img src="/logo.svg" alt="" width="120" height="32" />`. Delete the `logo__text` span if your logo already contains the name. Replace `public/favicon.svg` with your icon too.
+The logo is vector artwork traced from the original design, so it stays sharp at any size.
+
+| File | Use |
+|---|---|
+| `src/components/Logo.astro` + `logo-paths.ts` | Inline logo in the header and 404 page (propellers spin on hover) |
+| `public/brand/nimbus-logo-dark-bg.svg` / `-light-bg.svg` | Full logo for dark / light backgrounds (footer, partners, print) |
+| `public/brand/nimbus-mark-dark-bg.svg` / `-light-bg.svg` | Cloud-camera mark only |
+| `public/brand/nimbus-logo-512.png` | Square logo used by Google (structured data) |
+| `public/favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`, `icon-192/512.png`, `site.webmanifest` | Browser tab, phone home screen |
+| `public/og/default.jpg` | Share image (WhatsApp, LinkedIn…) |
+
+If you get an official SVG from your designer, the paths can be swapped in `src/components/logo-paths.ts`. Each part (cloud, wordmark, propellers, trails, tagline) is a separate path so the colours and hover animation keep working.
 
 ## Hero video
 
@@ -232,9 +243,9 @@ public/
 
 ## Still to supply (checklist)
 
-- [ ] **Logo:** SVG for `src/components/Logo.astro`, plus a favicon (`public/favicon.svg`)
+- [x] **Logo:** done (traced from your artwork). Optional: replace with the designer's original SVG for the cleanest curves.
 - [ ] **Hero video:** `public/video/hero.mp4` (+ poster), see the specs above
-- [ ] **OG image:** `public/og/default.jpg` with your own still and logo
+- [x] **OG image:** Madeira still + logo. Swap for your favourite frame if you like.
 - [ ] **Formspree form ID** in `src/config/site.ts` (the form won't send until this is set)
 - [ ] **Domain:** connect `nimbusnetherlands.nl` to Cloudflare Pages
 - [ ] **Copy review:** check the bio, services, prices/inclusions and delivery times in `src/i18n/*.ts` and `src/data/services.ts`

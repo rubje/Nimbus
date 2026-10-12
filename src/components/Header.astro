@@ -17,7 +17,7 @@ const items: RouteKey[] = ['work', 'services', 'about', 'contact'];
 <header class:list={['site-header', { 'site-header--overlay': overlay }]} data-header>
   <div class="container site-header__inner">
     <a href={path('home', lang)} class="site-header__logo">
-      <Logo />
+      <Logo height={46} class="site-header__logo-svg" />
     </a>
 
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
@@ -58,7 +58,8 @@ const items: RouteKey[] = ['work', 'services', 'about', 'contact'];
   .site-header--overlay::before { opacity: 0; }
   .site-header--overlay:global(.is-scrolled)::before { opacity: 1; }
   .site-header__inner { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
-  .site-header__logo { text-decoration: none; color: var(--offwhite); }
+  .site-header__logo { display: block; text-decoration: none; color: var(--offwhite); position: relative; z-index: 2; }
+  @media (max-width: 760px) { .site-header__logo :global(.logo) { height: 32px; width: auto; } }
 
   .site-nav { display: flex; align-items: center; gap: 2rem; }
   .site-nav ul { display: flex; gap: 1.75rem; }

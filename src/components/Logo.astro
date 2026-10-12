@@ -1,22 +1,68 @@
 ---
 /**
- * Placeholder logo. To use your own SVG logo:
- *  - replace the <svg> below with your SVG markup (keep aria-hidden="true"), or
- *  - put logo.svg in /public and use: <img src="/logo.svg" alt="" width="120" height="32" />
- * The brand name comes from src/config/site.ts.
+ * Nimbus logo, drawn as inline SVG so it stays sharp and can animate.
+ * - variant "lockup": cloud-camera mark + "Nimbus" + "NETHERLANDS"
+ * - variant "mark": only the cloud-camera mark
+ * Path data lives in logo-paths.ts (traced from the original artwork).
+ * Static files for other uses (print, socials, partners) are in /public/brand/.
  */
+import { lockup, mark } from './logo-paths';
 import { site } from '../config/site';
+
+interface Props {
+  variant?: 'lockup' | 'mark';
+  /** Rendered height in px (width follows the aspect ratio). */
+  height?: number;
+  /** Decorative logos (next to visible text) should be hidden from screen readers. */
+  decorative?: boolean;
+  class?: string;
+}
+
+const { variant = 'lockup', height = 40, decorative = false, class: className } = Astro.props;
+const art = variant === 'lockup' ? lockup : mark;
+const [, , w, h] = art.viewBox.split(' ').map(Number);
+const width = Math.round((w / h) * height);
 ---
 
-<span class="logo">
-  <svg class="logo__mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true">
-    <rect width="64" height="64" rx="14" fill="currentColor" opacity="0.12" />
-    <path d="M18 46V18l28 28V18" fill="none" stroke="var(--orange)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
-  </svg>
-  <span class="logo__text">{site.brand}</span>
-</span>
+<svg
+  class:list={['logo', `logo--${variant}`, className]}
+  viewBox={art.viewBox}
+  width={width}
+  height={height}
+  role={decorative ? undefined : 'img'}
+  aria-hidden={decorative ? 'true' : undefined}
+  aria-label={decorative ? undefined : site.legalName}
+  focusable="false"
+>
+  <path class="logo__cloud" d={art.mark} fill-rule="evenodd" />
+  {'word' in art && <path class="logo__word" d={art.word} fill-rule="evenodd" />}
+  <g class="logo__trails"><path d={art.trails} fill-rule="evenodd" /></g>
+  <g class="logo__props"><path d={art.props} fill-rule="evenodd" /></g>
+  {'tagline' in art && <path class="logo__tagline" d={art.tagline} fill-rule="evenodd" />}
+</svg>
 
 <style>
-  .logo { display: inline-flex; align-items: center; gap: 0.6rem; }
-  .logo__text { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  .logo { display: block; height: auto; max-width: 100%; overflow: visible; }
+  .logo__cloud, .logo__word { fill: var(--logo-ink, var(--offwhite)); }
+  .logo__props, .logo__trails, .logo__tagline { fill: var(--orange); }
+  .logo__props, .logo__trails { transform-box: fill-box; transform-origin: center; }
+
+  /* Hover (on the logo or its link): propellers spin, speed trails stretch. */
+  :global(a:hover) > .logo .logo__props, :global(a:focus-visible) > .logo .logo__props, .logo:hover .logo__props {
+    animation: logo-spin 0.35s linear infinite;
+  }
+  :global(a:hover) > .logo .logo__trails, :global(a:focus-visible) > .logo .logo__trails, .logo:hover .logo__trails {
+    animation: logo-trail 0.9s var(--ease) infinite alternate;
+  }
+  @keyframes logo-spin {
+    0%, 100% { transform: scaleX(1); opacity: 1; }
+    50% { transform: scaleX(0.55); opacity: 0.6; }
+  }
+  @keyframes logo-trail {
+    from { transform: translateX(0) scaleX(1); opacity: 1; }
+    to { transform: translateX(-4%) scaleX(1.15); opacity: 0.7; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .logo * { animation: none !important; }
+  }
 </style>

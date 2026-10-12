@@ -1,12 +1,32 @@
 ---
 import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
 ---
 
 <Base lang="nl" route="home" title="Pagina niet gevonden" description="Deze pagina bestaat niet (meer)." noindex>
-  <section class="container page-head" style="min-height: 60vh">
+  <section class="container page-head lost">
+    <div class="lost__mark"><Logo variant="mark" height={150} decorative /></div>
     <span class="kicker">404</span>
     <h1>Deze vlucht is uit beeld.</h1>
     <p class="lead">De pagina bestaat niet (meer). / This page doesn't exist.</p>
-    <p><a class="btn btn--primary" href="/">Home</a> <a class="btn btn--ghost" href="/en/">English</a></p>
+    <p class="lost__actions"><a class="btn btn--primary" href="/">Home</a> <a class="btn btn--ghost" href="/en/">English</a></p>
   </section>
 </Base>
+
+<style>
+  .lost { min-height: 70vh; }
+  .lost__mark { margin-bottom: 2rem; animation: hover-drift 5s ease-in-out infinite; width: fit-content; }
+  .lost__mark :global(.logo__props) { animation: logo-spin 0.35s linear infinite; }
+  .lost__actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  @keyframes hover-drift {
+    0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+    50% { transform: translate(12px, -10px) rotate(2deg); }
+  }
+  @keyframes logo-spin {
+    0%, 100% { transform: scaleX(1); opacity: 1; }
+    50% { transform: scaleX(0.55); opacity: 0.6; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lost__mark, .lost__mark :global(*) { animation: none !important; }
+  }
+</style>

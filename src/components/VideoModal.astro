@@ -21,7 +21,13 @@ const t = useTranslations(Astro.props.lang);
 </dialog>
 
 <style>
-  .video-modal { width: min(100% - 2rem, 1200px); padding: 0; border: 0; background: transparent; color: var(--offwhite); overflow: visible; }
+  /* Fit 16:9 inside the viewport both ways, leaving room for the close button and note. */
+  .video-modal {
+    width: min(100vw - 2rem, 1280px, (100vh - 9rem) * 16 / 9);
+    width: min(100vw - 2rem, 1280px, (100dvh - 9rem) * 16 / 9);
+    max-width: none; max-height: none; margin: auto; padding: 0; border: 0;
+    background: transparent; color: var(--offwhite); overflow: visible;
+  }
   .video-modal::backdrop { background: radial-gradient(ellipse at center, rgb(6 29 36 / 0.9), rgb(1 3 4 / 0.97)); backdrop-filter: blur(8px); }
   .video-modal[open] { animation: modal-in 0.4s var(--ease); }
   .video-modal__frame { aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius); overflow: hidden; box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08), 0 40px 120px -20px rgb(0 0 0 / 0.9), 0 0 120px -40px rgb(255 106 26 / 0.35); }

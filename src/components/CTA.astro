@@ -10,6 +10,7 @@ const t = useTranslations(lang);
 ---
 
 <section class="cta section">
+  <img class="cta__mark" src="/brand/nimbus-mark-dark-bg.svg" alt="" width="640" height="344" loading="lazy" decoding="async" />
   <div class="container cta__inner" data-reveal>
     <h2>{t.home.ctaTitle}</h2>
     <p class="lead">{t.home.ctaText}</p>
@@ -30,7 +31,12 @@ const t = useTranslations(lang);
     content: ''; position: absolute; left: 50%; top: 0; width: min(600px, 80%); height: 1px; transform: translateX(-50%);
     background: linear-gradient(90deg, transparent, rgb(255 106 26 / 0.6), transparent);
   }
-  .cta__inner { text-align: center; display: flex; flex-direction: column; align-items: center; padding-block: var(--space-m); }
+  /* Oversized faint logo mark behind the text. */
+  .cta__mark {
+    position: absolute; left: 50%; top: 50%; width: min(760px, 120%); height: auto; transform: translate(-50%, -50%);
+    opacity: 0.06; pointer-events: none;
+  }
+  .cta__inner { position: relative; text-align: center; display: flex; flex-direction: column; align-items: center; padding-block: var(--space-m); }
   .cta__inner h2 { max-width: 18ch; }
   .cta__inner .lead { margin-bottom: 2rem; }
 </style>
