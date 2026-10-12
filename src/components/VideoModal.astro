@@ -1,0 +1,37 @@
+---
+/** One shared video player dialog. Opened by any element with data-video. */
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const t = useTranslations(Astro.props.lang);
+---
+
+<dialog class="video-modal" data-video-modal aria-label={t.video.play}>
+  <div class="video-modal__inner">
+    <button class="video-modal__close" type="button" data-video-close>
+      <span aria-hidden="true">×</span>
+      <span class="visually-hidden">{t.video.close}</span>
+    </button>
+    <div class="video-modal__frame" data-video-frame></div>
+    <p class="video-modal__note">{t.video.consent}</p>
+  </div>
+</dialog>
+
+<style>
+  .video-modal { width: min(100% - 2rem, 1200px); padding: 0; border: 0; background: transparent; color: var(--offwhite); overflow: visible; }
+  .video-modal::backdrop { background: rgb(4 24 30 / 0.92); backdrop-filter: blur(6px); }
+  .video-modal[open] { animation: modal-in 0.4s var(--ease); }
+  .video-modal__frame { aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius); overflow: hidden; }
+  .video-modal__frame :global(iframe) { width: 100%; height: 100%; border: 0; }
+  .video-modal__close {
+    position: absolute; top: -3.25rem; right: 0; width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgb(244 241 236 / 0.4); background: transparent; color: var(--offwhite); font-size: 1.6rem; line-height: 1; cursor: pointer;
+  }
+  .video-modal__close:hover { border-color: var(--orange); color: var(--orange-text); }
+  .video-modal__inner { position: relative; }
+  .video-modal__note { font-size: 0.8rem; color: var(--muted); margin: 0.75rem 0 0; }
+  @keyframes modal-in { from { opacity: 0; transform: scale(0.97); } }
+</style>

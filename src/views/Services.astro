@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CTA from '../components/CTA.astro';
+import { services, process } from '../data/services';
+import { site } from '../config/site';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Base lang={lang} route="services" title={t.meta.services.title} description={t.meta.services.description}>
+  <section class="container page-head">
+    <span class="kicker">{site.brand}</span>
+    <h1>{t.services.title}</h1>
+    <p class="lead">{t.services.lead}</p>
+  </section>
+
+  <section class="container section services" style="padding-top: 0">
+    {services.map((s, i) => <ServiceCard service={s} lang={lang} index={i} detailed />)}
+  </section>
+
+  <section class="section section--deep" aria-labelledby="process-title">
+    <div class="container">
+      <h2 id="process-title">{t.services.processTitle}</h2>
+      <ol class="process">
+        {
+          process.map((step, i) => (
+            <li data-reveal>
+              <span class="process__num" aria-hidden="true">{i + 1}</span>
+              <h3>{step.title[lang]}</h3>
+              <p>{step.text[lang]}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <CTA lang={lang} />
+</Base>
+
+<style>
+  .services { display: grid; gap: var(--space-s); }
+  .process { list-style: none; padding: 0; margin: var(--space-m) 0 0; display: grid; gap: var(--space-m); counter-reset: step; }
+  @media (min-width: 700px) { .process { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .process { grid-template-columns: repeat(4, 1fr); } }
+  .process li { border-top: 1px solid var(--line); padding-top: 1.5rem; }
+  .process__num {
+    display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%;
+    border: 1.5px solid var(--orange); color: var(--orange-text); font-weight: 600; margin-bottom: 1.25rem;
+  }
+  .process p { color: var(--muted); }
+</style>

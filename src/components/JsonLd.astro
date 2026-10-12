@@ -1,0 +1,45 @@
+---
+/** LocalBusiness structured data. Pass `extra` for page-specific items (e.g. videos). */
+import { site } from '../config/site';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  extra?: Record<string, unknown>[];
+  /** Set false to output only `extra` (the layout already adds the business). */
+  business?: boolean;
+}
+
+const { lang, extra = [], business: withBusiness = true } = Astro.props;
+const t = useTranslations(lang);
+
+const business: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${site.url}/#business`,
+  name: site.legalName,
+  alternateName: site.brand,
+  description: t.meta.home.description,
+  url: site.url,
+  email: site.email,
+  image: new URL(site.ogImage, site.url).href,
+  logo: new URL('/favicon.svg', site.url).href,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.city,
+    addressRegion: site.region,
+    addressCountry: site.country,
+  },
+  areaServed: { '@type': 'Country', name: 'Netherlands' },
+  knowsLanguage: ['nl', 'en'],
+  sameAs: Object.values(site.socials).filter(Boolean),
+};
+if (site.phone) business.telephone = site.phone;
+if (site.kvk) business.identifier = { '@type': 'PropertyValue', propertyID: 'KvK', value: site.kvk };
+
+// Escape "<" so content can never close the script tag.
+const json = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c');
+---
+
+{withBusiness && <script type="application/ld+json" set:html={json(business)} />}
+{extra.map((item) => <script type="application/ld+json" set:html={json(item)} />)}

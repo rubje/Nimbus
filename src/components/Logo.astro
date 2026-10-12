@@ -1,0 +1,22 @@
+---
+/**
+ * Placeholder logo. To use your own SVG logo:
+ *  - replace the <svg> below with your SVG markup (keep aria-hidden="true"), or
+ *  - put logo.svg in /public and use: <img src="/logo.svg" alt="" width="120" height="32" />
+ * The brand name comes from src/config/site.ts.
+ */
+import { site } from '../config/site';
+---
+
+<span class="logo">
+  <svg class="logo__mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true">
+    <rect width="64" height="64" rx="14" fill="currentColor" opacity="0.12" />
+    <path d="M18 46V18l28 28V18" fill="none" stroke="var(--orange)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+  <span class="logo__text">{site.brand}</span>
+</span>
+
+<style>
+  .logo { display: inline-flex; align-items: center; gap: 0.6rem; }
+  .logo__text { font-weight: 600; font-size: 1.2rem; letter-spacing: 0.04em; text-transform: uppercase; }
+</style>

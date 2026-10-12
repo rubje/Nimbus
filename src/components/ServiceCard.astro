@@ -1,0 +1,57 @@
+---
+import type { Service } from '../data/services';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  service: Service;
+  lang: Lang;
+  /** Show inclusions and "ideal for" (Services page). */
+  detailed?: boolean;
+  index: number;
+}
+
+const { service, lang, detailed = false, index } = Astro.props;
+const t = useTranslations(lang);
+const soon = service.status === 'soon';
+---
+
+<article class:list={['service', { 'service--soon': soon, 'service--detailed': detailed }]} id={service.id} data-reveal>
+  <div class="service__head">
+    <span class="service__num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+    {soon && <span class="service__badge">{t.services.soon}</span>}
+  </div>
+  <h3 class="service__title">{service.title[lang]}</h3>
+  <p class="service__summary">{service.summary[lang]}</p>
+  {
+    detailed && (
+      <div class="service__details">
+        <div>
+          <h4>{t.services.included}</h4>
+          <ul class="service__list">
+            {service.included.map((i) => <li>{i[lang]}</li>)}
+          </ul>
+        </div>
+        <div>
+          <h4>{t.services.idealFor}</h4>
+          <p>{service.idealFor[lang]}</p>
+        </div>
+      </div>
+    )
+  }
+</article>
+
+<style>
+  .service { padding: var(--space-m); background: var(--petrol-light); border-radius: var(--radius); border: 1px solid var(--line); height: 100%; }
+  .service--soon { background: transparent; border-style: dashed; }
+  .service__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .service__num { font-size: var(--step--1); color: var(--orange-text); font-weight: 600; letter-spacing: 0.1em; }
+  .service__badge { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; border: 1px solid var(--orange); color: var(--orange-text); padding: 0.2rem 0.7rem; border-radius: 999px; }
+  .service__summary { color: var(--muted); }
+  .service--detailed .service__title { font-size: var(--step-2); }
+  .service__details { display: grid; gap: var(--space-m); margin-top: var(--space-m); padding-top: var(--space-m); border-top: 1px solid var(--line); }
+  @media (min-width: 760px) { .service__details { grid-template-columns: 3fr 2fr; } }
+  h4 { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-weight: 600; margin: 0 0 1rem; }
+  .service__list { display: grid; gap: 0.6rem; }
+  .service__list li { padding-left: 1.6rem; position: relative; }
+  .service__list li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 0.8rem; height: 2px; background: var(--orange); }
+</style>

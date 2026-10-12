@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import WorkGrid from '../components/WorkGrid.astro';
+import CTA from '../components/CTA.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { videos } from '../data/videos';
+import { site } from '../config/site';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// VideoObject structured data for each project.
+const videoLd = videos.map((v) => ({
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: v.title[lang],
+  description: v.description[lang],
+  thumbnailUrl: `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`,
+  embedUrl: `https://www.youtube-nocookie.com/embed/${v.youtubeId}`,
+  contentUrl: `https://www.youtube.com/watch?v=${v.youtubeId}`,
+  uploadDate: `${v.year}-01-01`,
+  creator: { '@id': `${site.url}/#business` },
+}));
+---
+
+<Base lang={lang} route="work" title={t.meta.work.title} description={t.meta.work.description}>
+  <JsonLd slot="head" lang={lang} extra={videoLd} business={false} />
+  <section class="container page-head">
+    <span class="kicker">{site.brand}</span>
+    <h1>{t.work.title}</h1>
+    <p class="lead">{t.work.lead}</p>
+  </section>
+  <section class="container section" style="padding-top: 0">
+    <WorkGrid lang={lang} />
+  </section>
+  <CTA lang={lang} />
+</Base>

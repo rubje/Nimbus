@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { site } from '../config/site';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Base lang={lang} route="contact" title={t.meta.contact.title} description={t.meta.contact.description}>
+  <section class="container page-head">
+    <span class="kicker">{site.brand}</span>
+    <h1>{t.contact.title}</h1>
+    <p class="lead">{t.contact.lead}</p>
+  </section>
+
+  <section class="container section contact" style="padding-top: 0">
+    <ContactForm lang={lang} />
+    <aside class="contact__aside">
+      <h2>{t.contact.quoteTitle}</h2>
+      <ol class="quote-steps">
+        {t.contact.quoteSteps.map((s) => <li>{s}</li>)}
+      </ol>
+      <div class="contact__direct">
+        <p>{t.contact.emailLabel}</p>
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+        {site.phone && <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a>}
+      </div>
+    </aside>
+  </section>
+</Base>
+
+<style>
+  .contact { display: grid; gap: var(--space-l); }
+  @media (min-width: 960px) { .contact { grid-template-columns: 1.4fr 1fr; align-items: start; } }
+  .contact__aside { background: var(--petrol-light); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--space-m); }
+  .contact__aside h2 { font-size: var(--step-1); }
+  .quote-steps { padding-left: 1.2rem; margin: 0 0 var(--space-m); display: grid; gap: 0.75rem; color: var(--muted); }
+  .quote-steps li::marker { color: var(--orange-text); font-weight: 600; }
+  .contact__direct { border-top: 1px solid var(--line); padding-top: var(--space-s); display: grid; gap: 0.3rem; }
+  .contact__direct p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+  .contact__direct a { font-size: var(--step-1); font-weight: 500; word-break: break-word; }
+</style>

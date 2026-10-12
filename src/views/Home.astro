@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroVideo from '../components/HeroVideo.astro';
+import VideoCard from '../components/VideoCard.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CTA from '../components/CTA.astro';
+import { videos } from '../data/videos';
+import { services } from '../data/services';
+import { useTranslations, path, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const featured = videos.filter((v) => v.featured).slice(0, 3);
+---
+
+<Base lang={lang} route="home" title={t.meta.home.title} description={t.meta.home.description} overlayHeader>
+  <HeroVideo kicker={t.home.heroKicker} title={t.home.heroTitle} lead={t.home.heroLead}>
+    <a class="btn btn--primary" href={path('work', lang)}>{t.home.heroCta}</a>
+    <a class="btn btn--ghost" href={path('contact', lang)}>{t.home.heroCta2}</a>
+  </HeroVideo>
+
+  <section class="section intro">
+    <div class="container intro__grid" data-reveal>
+      <h2>{t.home.introTitle}</h2>
+      <p class="lead">{t.home.introText}</p>
+    </div>
+  </section>
+
+  <section class="section featured" aria-labelledby="featured-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="featured-title">{t.home.featuredTitle}</h2>
+        <a class="link-arrow" href={path('work', lang)}>{t.home.featuredAll}</a>
+      </div>
+      <div class="featured__grid">
+        {featured.map((v, i) => <VideoCard video={v} lang={lang} large={i === 0} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--deep" aria-labelledby="services-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="services-title">{t.home.servicesTitle}</h2>
+        <a class="link-arrow" href={path('services', lang)}>{t.home.servicesMore}</a>
+      </div>
+      <div class="services__grid">
+        {services.map((s, i) => <ServiceCard service={s} lang={lang} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <CTA lang={lang} />
+</Base>
+
+<style>
+  .intro__grid { display: grid; gap: var(--space-m); }
+  @media (min-width: 900px) { .intro__grid { grid-template-columns: 1fr 1.3fr; align-items: start; } }
+  .intro__grid .lead { color: var(--offwhite); opacity: 0.9; }
+
+  .featured__grid { display: grid; gap: var(--space-m) var(--space-s); }
+  @media (min-width: 900px) {
+    .featured__grid { grid-template-columns: 1.6fr 1fr; grid-template-rows: auto auto; }
+    .featured__grid > :global(:first-child) { grid-row: span 2; }
+  }
+
+  .services__grid { display: grid; gap: var(--space-s); }
+  @media (min-width: 900px) { .services__grid { grid-template-columns: repeat(3, 1fr); } }
+</style>

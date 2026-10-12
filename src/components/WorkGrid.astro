@@ -1,0 +1,53 @@
+---
+/** Portfolio grid with category filter. Without JS all items are shown. */
+import VideoCard from './VideoCard.astro';
+import { videos, categories } from '../data/videos';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="work" data-work>
+  <div class="work__filters" role="group" aria-label={t.work.filterLabel} data-filters hidden>
+    <button type="button" aria-pressed="true" data-filter="all">{t.categories.all}</button>
+    {
+      categories.map((c) => (
+        <button type="button" aria-pressed="false" data-filter={c}>
+          {t.categories[c]}
+        </button>
+      ))
+    }
+  </div>
+
+  <p class="work__status visually-hidden" aria-live="polite" data-filter-status data-template={t.work.count}></p>
+
+  <div class="work__grid">
+    {videos.map((v) => <VideoCard video={v} lang={lang} headingLevel="h2" />)}
+  </div>
+
+  <p class="work__empty" data-empty hidden>{t.work.empty}</p>
+</div>
+
+<style>
+  .work__filters { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: var(--space-m); }
+  .work__filters button {
+    font: inherit; font-size: 0.9rem; font-weight: 500; color: var(--offwhite); background: transparent;
+    border: 1px solid rgb(244 241 236 / 0.3); border-radius: 999px; padding: 0.55rem 1.2rem; cursor: pointer;
+    min-height: 44px; transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .work__filters button:hover { border-color: var(--offwhite); }
+  .work__filters button[aria-pressed='true'] { background: var(--orange); border-color: var(--orange); color: var(--ink); }
+  .work__grid { display: grid; gap: var(--space-m) var(--space-s); grid-template-columns: 1fr; }
+  @media (min-width: 600px) { .work__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .work__grid { grid-template-columns: repeat(3, 1fr); } }
+  .work__grid :global([hidden]) { display: none; }
+  .work__empty {
+    padding: var(--space-l) var(--space-m); border: 1px dashed rgb(244 241 236 / 0.25); border-radius: var(--radius);
+    text-align: center; color: var(--muted); max-width: none; font-size: var(--step-1);
+  }
+</style>

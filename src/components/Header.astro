@@ -1,0 +1,107 @@
+---
+import Logo from './Logo.astro';
+import { useTranslations, path, routes, type Lang, type RouteKey } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  route: RouteKey;
+  overlay?: boolean;
+}
+
+const { lang, route, overlay = false } = Astro.props;
+const t = useTranslations(lang);
+const other: Lang = lang === 'nl' ? 'en' : 'nl';
+const items: RouteKey[] = ['work', 'services', 'about', 'contact'];
+---
+
+<header class:list={['site-header', { 'site-header--overlay': overlay }]} data-header>
+  <div class="container site-header__inner">
+    <a href={path('home', lang)} class="site-header__logo">
+      <Logo />
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="visually-hidden" data-open-label={t.nav.menu} data-close-label={t.nav.close}>{t.nav.menu}</span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label="Main" data-nav>
+      <ul>
+        {
+          items.map((key) => (
+            <li>
+              <a href={path(key, lang)} aria-current={route === key ? 'page' : undefined}>
+                {t.nav[key]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="lang-switch" href={routes[route][other]} hreflang={other} lang={other} title={t.nav.switchLang}>
+        <span aria-hidden="true">{other.toUpperCase()}</span>
+        <span class="visually-hidden">{t.nav.switchLang}</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Background + blur live on ::before: backdrop-filter on the header itself
+     would trap the fixed full-screen mobile menu inside the header. */
+  .site-header { position: sticky; top: 0; z-index: 50; }
+  .site-header::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background: rgb(11 60 73 / 0.92); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); transition: opacity 0.4s;
+  }
+  .site-header--overlay { position: fixed; inset: 0 0 auto; }
+  .site-header--overlay::before { opacity: 0; background: rgb(7 43 53 / 0.92); }
+  .site-header--overlay:global(.is-scrolled)::before { opacity: 1; }
+  .site-header__inner { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
+  .site-header__logo { text-decoration: none; color: var(--offwhite); }
+
+  .site-nav { display: flex; align-items: center; gap: 2rem; }
+  .site-nav ul { display: flex; gap: 1.75rem; }
+  .site-nav a { text-decoration: none; font-weight: 450; font-size: 0.95rem; }
+  .site-nav a[aria-current='page'] { color: var(--orange-text); }
+  .lang-switch {
+    border: 1px solid rgb(244 241 236 / 0.35); border-radius: 999px; padding: 0.3rem 0.75rem;
+    font-size: 0.8rem !important; letter-spacing: 0.08em; font-weight: 600 !important;
+  }
+  .lang-switch:hover { border-color: var(--orange); }
+
+  .nav-toggle { display: none; }
+
+  @media (max-width: 760px) {
+    .nav-toggle {
+      display: grid; place-items: center; width: 44px; height: 44px; background: none; border: 0;
+      color: var(--offwhite); cursor: pointer; position: relative; z-index: 2;
+    }
+    .nav-toggle__bars, .nav-toggle__bars::before, .nav-toggle__bars::after {
+      display: block; width: 24px; height: 2px; background: currentColor; transition: transform 0.3s var(--ease);
+      content: '';
+    }
+    .nav-toggle__bars { position: relative; }
+    .nav-toggle__bars::before { position: absolute; top: -7px; }
+    .nav-toggle__bars::after { position: absolute; top: 7px; }
+    .nav-toggle[aria-expanded='true'] .nav-toggle__bars { background: transparent; }
+    .nav-toggle[aria-expanded='true'] .nav-toggle__bars::before { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded='true'] .nav-toggle__bars::after { transform: translateY(-7px) rotate(-45deg); }
+
+    .site-nav {
+      position: fixed; inset: 0; background: var(--petrol-deep); flex-direction: column; justify-content: center;
+      gap: 2.5rem; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+    }
+    .site-nav.is-open { opacity: 1; visibility: visible; }
+    .site-nav ul { flex-direction: column; align-items: center; gap: 1.5rem; }
+    .site-nav ul a { font-size: var(--step-2); font-weight: 500; }
+  }
+  /* Without JS the menu is simply shown inline below the logo. */
+  @media (max-width: 760px) {
+    :global(html:not(.js)) .nav-toggle { display: none; }
+    :global(html:not(.js)) .site-nav { position: static; opacity: 1; visibility: visible; background: none; flex-direction: row; flex-wrap: wrap; gap: 1rem; }
+    :global(html:not(.js)) .site-nav ul { flex-direction: row; flex-wrap: wrap; gap: 1rem; }
+    :global(html:not(.js)) .site-nav ul a { font-size: 1rem; }
+    :global(html:not(.js)) .site-header__inner { flex-wrap: wrap; padding-block: 0.75rem; }
+  }
+</style>

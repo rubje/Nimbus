@@ -1,0 +1,57 @@
+---
+import Logo from './Logo.astro';
+import { site } from '../config/site';
+import { useTranslations, path, type Lang, type RouteKey } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const items: RouteKey[] = ['work', 'services', 'about', 'contact'];
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div>
+      <Logo />
+      <p class="site-footer__tagline">{t.footer.tagline}</p>
+      <p class="site-footer__meta">{t.footer.based} {site.city}, {t.footer.serving}.</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        {items.map((key) => <li><a href={path(key, lang)}>{t.nav[key]}</a></li>)}
+        <li><a href={path('privacy', lang)}>{t.footer.privacy}</a></li>
+      </ul>
+    </nav>
+    <div>
+      <ul>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        {site.phone && <li><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a></li>}
+        {site.socials.youtube && <li><a href={site.socials.youtube} rel="me noopener" target="_blank">YouTube ↗</a></li>}
+        {site.socials.instagram && <li><a href={site.socials.instagram} rel="me noopener" target="_blank">Instagram ↗</a></li>}
+      </ul>
+    </div>
+  </div>
+  <div class="container site-footer__bottom">
+    <span>© {year} {site.legalName}</span>
+    {site.kvk && <span>{t.footer.kvk} {site.kvk}</span>}
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--petrol-deep); padding-block: var(--space-l) var(--space-m); border-top: 1px solid var(--line); font-size: 0.95rem; }
+  .site-footer__grid { display: grid; gap: var(--space-m); grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .site-footer__grid { grid-template-columns: 2fr 1fr 1fr; } }
+  .site-footer__tagline { margin-top: 1rem; color: var(--offwhite); }
+  .site-footer__meta { color: var(--muted); }
+  .site-footer ul { display: grid; gap: 0.6rem; }
+  .site-footer a { text-decoration: none; color: var(--muted); }
+  .site-footer a:hover { color: var(--orange-text); }
+  .site-footer__bottom {
+    display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: space-between; margin-top: var(--space-l);
+    padding-top: var(--space-s); border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem;
+  }
+</style>

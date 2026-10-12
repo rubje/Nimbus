@@ -1,0 +1,90 @@
+---
+/**
+ * Click-to-load video card. Shows an optimised thumbnail (downloaded from
+ * YouTube at build time and served from this site). Nothing is loaded from
+ * YouTube until the visitor clicks; then VideoModal opens the embed.
+ * Without JavaScript the card is a normal link to the video on YouTube.
+ */
+import { getImage } from 'astro:assets';
+import type { Video } from '../data/videos';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  video: Video;
+  lang: Lang;
+  /** Larger image sizes for wide cards. */
+  large?: boolean;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { video, lang, large = false, headingLevel = 'h3' } = Astro.props;
+const t = useTranslations(lang);
+const title = video.title[lang];
+const Heading = headingLevel;
+
+const sizes = large ? '(min-width: 900px) 60vw, 100vw' : '(min-width: 900px) 33vw, (min-width: 600px) 50vw, 100vw';
+let src: string;
+let srcset: string | undefined;
+
+if (video.thumbnail) {
+  src = video.thumbnail;
+} else {
+  const base = `https://i.ytimg.com/vi/${video.youtubeId}`;
+  const opts = { inferSize: true, widths: [480, 800, 1280], format: 'webp' as const, quality: 72 };
+  let img;
+  try {
+    img = await getImage({ src: `${base}/maxresdefault.jpg`, ...opts });
+  } catch {
+    // Not every video has a max-resolution thumbnail.
+    img = await getImage({ src: `${base}/hqdefault.jpg`, ...opts, widths: [480] });
+  }
+  src = img.src;
+  srcset = img.srcSet.attribute;
+}
+
+const watchUrl = `https://www.youtube.com/watch?v=${video.youtubeId}${video.start ? `&t=${video.start}s` : ''}`;
+---
+
+<article class="video-card" data-category={video.category} data-reveal>
+  <a
+    class="video-card__link"
+    href={watchUrl}
+    data-video={video.youtubeId}
+    data-start={video.start ?? ''}
+    data-title={title}
+    aria-label={`${t.video.play}: ${title}`}
+  >
+    <div class="video-card__media">
+      <img src={src} srcset={srcset} sizes={sizes} alt="" width="1280" height="720" loading="lazy" decoding="async" />
+      <span class="video-card__play" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+      </span>
+    </div>
+    <div class="video-card__body">
+      <Heading class="video-card__title">{title}</Heading>
+      <p class="video-card__meta">
+        {t.categories[video.category]} · {video.location} · {video.year}
+      </p>
+      <p class="video-card__desc">{video.description[lang]}</p>
+    </div>
+  </a>
+</article>
+
+<style>
+  .video-card__link { display: block; text-decoration: none; color: inherit; }
+  .video-card__media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius); background: var(--petrol-deep); }
+  .video-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease), filter 0.6s; filter: saturate(0.92); }
+  .video-card__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgb(7 43 53 / 0.55)); }
+  .video-card__play {
+    position: absolute; z-index: 1; left: 1rem; bottom: 1rem; width: 52px; height: 52px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--orange); color: var(--ink);
+    transition: transform 0.4s var(--ease);
+  }
+  .video-card__link:hover img, .video-card__link:focus-visible img { transform: scale(1.04); filter: saturate(1.05); }
+  .video-card__link:hover .video-card__play, .video-card__link:focus-visible .video-card__play { transform: scale(1.1); }
+  .video-card__body { padding-top: 1rem; }
+  .video-card__title { font-size: var(--step-1); margin-bottom: 0.25rem; }
+  .video-card__link:hover .video-card__title { color: var(--orange-text); }
+  .video-card__meta { font-size: var(--step--1); color: var(--muted); letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+  .video-card__desc { font-size: 0.95rem; color: var(--muted); margin: 0; }
+</style>

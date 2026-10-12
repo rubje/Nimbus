@@ -1,0 +1,77 @@
+---
+/**
+ * Contact form posting to Formspree (no backend needed).
+ * Set formspreeId in src/config/site.ts.
+ */
+import { site } from '../config/site';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const f = useTranslations(lang).contact.form;
+const action = `https://formspree.io/f/${site.formspreeId}`;
+---
+
+<form class="form" action={action} method="POST" data-contact-form data-sending={f.sending} data-success={f.success} data-error={f.error}>
+  <input type="hidden" name="_subject" value={`${site.brand}: website enquiry (${lang.toUpperCase()})`} />
+  <input type="hidden" name="language" value={lang} />
+  <!-- Honeypot: bots fill this, people don't see it. -->
+  <div class="visually-hidden" aria-hidden="true">
+    <label>Leave empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="form__row">
+    <div class="field">
+      <label for="f-name">{f.name}</label>
+      <input id="f-name" name="name" type="text" autocomplete="name" required />
+    </div>
+    <div class="field">
+      <label for="f-email">{f.email}</label>
+      <input id="f-email" name="email" type="email" autocomplete="email" required />
+    </div>
+  </div>
+  <div class="form__row">
+    <div class="field">
+      <label for="f-company">{f.company}</label>
+      <input id="f-company" name="company" type="text" autocomplete="organization" />
+    </div>
+    <div class="field">
+      <label for="f-type">{f.type}</label>
+      <select id="f-type" name="project_type">
+        {f.typeOptions.map((o) => <option>{o}</option>)}
+      </select>
+    </div>
+  </div>
+  <div class="field">
+    <label for="f-date">{f.date}</label>
+    <input id="f-date" name="preferred_date" type="text" inputmode="text" />
+  </div>
+  <div class="field">
+    <label for="f-message">{f.message}</label>
+    <textarea id="f-message" name="message" rows="6" required></textarea>
+  </div>
+  <p class="form__privacy">{f.privacy}</p>
+  <button class="btn btn--primary" type="submit">{f.submit}</button>
+  <p class="form__status" role="status" aria-live="polite" data-form-status></p>
+</form>
+
+<style>
+  .form { display: grid; gap: 1.25rem; }
+  .form__row { display: grid; gap: 1.25rem; }
+  @media (min-width: 640px) { .form__row { grid-template-columns: 1fr 1fr; } }
+  .field { display: grid; gap: 0.4rem; }
+  label { font-size: 0.9rem; font-weight: 500; }
+  input, select, textarea {
+    font: inherit; color: var(--offwhite); background: var(--petrol-deep); border: 1px solid rgb(244 241 236 / 0.25);
+    border-radius: 10px; padding: 0.85rem 1rem; width: 100%; min-height: 48px;
+  }
+  textarea { resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--orange); outline-offset: 1px; border-color: transparent; }
+  .form__privacy { font-size: 0.85rem; color: var(--muted); margin: 0; }
+  .form button { justify-self: start; }
+  .form__status { margin: 0; font-weight: 500; }
+  .form__status[data-state='error'] { color: var(--orange-text); }
+</style>
