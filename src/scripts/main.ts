@@ -28,6 +28,23 @@ if (toggle && nav) {
   nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
 }
 
+/* ---------- Logo intro: flap the propellers once per visit ---------- */
+const headerLogo = document.querySelector<SVGElement>('[data-header] .logo');
+if (headerLogo && !reducedMotion) {
+  let seen = false;
+  try {
+    seen = sessionStorage.getItem('nimbus-logo-intro') === '1';
+    sessionStorage.setItem('nimbus-logo-intro', '1');
+  } catch {
+    // Storage blocked: just play it.
+  }
+  if (!seen) {
+    headerLogo.classList.add('logo--intro');
+    // Remove afterwards so the hover animation works normally again.
+    headerLogo.querySelector('.logo__props')?.addEventListener('animationend', () => headerLogo.classList.remove('logo--intro'), { once: true });
+  }
+}
+
 /* ---------- Hero background video ---------- */
 const hero = document.querySelector<HTMLVideoElement>('[data-hero-video]');
 const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;

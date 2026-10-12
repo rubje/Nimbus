@@ -54,6 +54,19 @@ const width = Math.round((w / h) * height);
   :global(a:hover) > .logo .logo__trails, :global(a:focus-visible) > .logo .logo__trails, .logo:hover .logo__trails {
     animation: logo-trail 0.9s var(--ease) infinite alternate;
   }
+  /* Intro: on the first page of a visit the propellers flap and the trails swoosh twice
+     (class added by src/scripts/main.ts). */
+  .logo--intro .logo__props { animation: logo-flap 0.6s cubic-bezier(0.36, 0, 0.3, 1.4) 0.5s 2; }
+  .logo--intro .logo__trails { animation: logo-swoosh 0.6s var(--ease) 0.5s 2; }
+  @keyframes logo-flap {
+    0%, 100% { transform: none; }
+    30% { transform: translateY(-14%) scaleX(0.4) rotate(-8deg); opacity: 0.7; }
+    60% { transform: translateY(4%) scaleX(1.12) rotate(4deg); opacity: 1; }
+  }
+  @keyframes logo-swoosh {
+    0%, 100% { transform: none; opacity: 1; }
+    40% { transform: translateX(-14%) scaleX(1.35); opacity: 0.55; }
+  }
   @keyframes logo-spin {
     0%, 100% { transform: scaleX(1); opacity: 1; }
     50% { transform: scaleX(0.55); opacity: 0.6; }

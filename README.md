@@ -1,6 +1,6 @@
 # Nimbus: FPV drone videography website
 
-This is the static website for **Nimbus Netherlands**, built with [Astro](https://astro.build) and plain CSS. It has no backend and no tracking cookies, and it deploys to Cloudflare Pages.
+This is the static website for **Nimbus Netherlands**, built with [Astro](https://astro.build) and plain CSS. It has no backend and no tracking cookies, and it deploys to Cloudflare (Workers static assets) on every push to GitHub.
 
 - Dutch is the default language (`/`, `/werk/`, `/diensten/`, `/over/`, `/contact/`, `/privacy/`)
 - English lives under `/en/` (`/en/work/`, `/en/services/`, `/en/about/`, `/en/contact/`, `/en/privacy/`)
@@ -138,8 +138,7 @@ The form has a hidden spam trap (honeypot). Messages include the language the vi
 
 ## Analytics (optional, cookieless)
 
-The easiest option is the Cloudflare Pages dashboard: your project → **Metrics → Web Analytics → Enable**. That needs no code and no cookies.
-Alternatively, create a site under **Cloudflare → Analytics & Logs → Web Analytics** and paste its token into `cfAnalyticsToken` in `src/config/site.ts`.
+In Cloudflare, go to **Analytics & Logs → Web Analytics → Add a site** (`nimbusnetherlands.nl`). With DNS on Cloudflare it can be switched on automatically, with no code. Alternatively, paste the site token into `cfAnalyticsToken` in `src/config/site.ts`.
 
 No cookie banner is needed for either option. If you ever add a tool that sets cookies, update the privacy page.
 
@@ -147,24 +146,10 @@ No cookie banner is needed for either option. If you ever add a tool that sets c
 
 ## Deploying
 
-### 1. Push to GitHub
+**Live setup:** GitHub repo `rubje/Nimbus` → Cloudflare **Workers** project `nimbus` (Workers Builds, connected to the repo).
+Live at https://nimbus.rubenvandv.workers.dev, and soon at https://nimbusnetherlands.nl.
 
-The project is already a git repository (branch `main`) with a first commit. Connect it to GitHub and push:
-
-```bash
-cd C:\Users\rvandervelde\Projects\Nimbus
-git remote add origin https://github.com/rubje/Nimbus.git
-git push -u origin main
-```
-
-If GitHub rejects the push because the repo already has commits (e.g. a README made on github.com):
-
-```bash
-git pull origin main --allow-unrelated-histories   # merge, resolve conflicts if any
-git push -u origin main
-```
-
-After that, deploying a change is:
+Every push to `main` deploys automatically (about 2 minutes):
 
 ```bash
 git add -A
@@ -172,39 +157,25 @@ git commit -m "Add new hotel video"
 git push
 ```
 
-Cloudflare rebuilds the site automatically within about a minute.
+Watch builds in Cloudflare: **Workers & Pages → nimbus → Deployments**.
 
-### 2. Connect Cloudflare Pages
+**Cloudflare build settings** (Settings → Builds):
 
-1. Log in at [dash.cloudflare.com](https://dash.cloudflare.com) (a free account is enough).
-2. **Workers & Pages → Create → Pages → Connect to Git**.
-3. Authorise GitHub and select the **rubje/Nimbus** repository.
-4. Build settings:
-   - **Framework preset:** Astro
-   - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
-   - **Environment variable:** `NODE_VERSION` = `22`
-5. **Save and Deploy**. Your site is live at `https://<project>.pages.dev`.
+- **Build command:** `npm run build`
+- **Deploy command:** `npx wrangler deploy`
+- **Root:** `/`
 
-`public/_headers` already sets caching and security headers for Cloudflare.
+`wrangler.jsonc` tells Cloudflare to serve `./dist` as static files, with `404.html` for unknown pages. Node 22 comes from `.node-version`, and `public/_headers` sets caching and security headers.
 
-### 3. Connect nimbusnetherlands.nl
+> **Lock file gotcha:** Cloudflare installs with **npm 10** (`npm ci`). If you add packages with npm 11 and the build fails with "package.json and package-lock.json are not in sync", run `npx npm@10 install --package-lock-only`, then commit `package-lock.json`.
 
-**Option A (recommended): move DNS to Cloudflare.** This gives the apex domain (no www) plus free SSL with the least hassle.
+### Domain: nimbusnetherlands.nl
 
-1. In Cloudflare: **Add a domain** → `nimbusnetherlands.nl` → Free plan.
-2. Cloudflare shows two nameservers (e.g. `xxx.ns.cloudflare.com`).
-3. At your registrar (TransIP, Hostnet, Strato, Versio…), replace the nameservers with Cloudflare's. This can take from a few minutes up to 24 hours.
-   - If you use email on this domain, check that your MX records were copied to Cloudflare DNS.
-4. In your Pages project: **Custom domains → Set up a custom domain** → `nimbusnetherlands.nl`, then add `www.nimbusnetherlands.nl` as well.
-5. Redirect www to the main domain: **Rules → Redirect Rules → Create rule**, using the "Redirect from WWW to root" template (301).
-
-**Option B: keep DNS at your registrar.** This works for `www` only. Most Dutch registrars can't CNAME the apex domain.
-
-1. In Pages: **Custom domains** → add `www.nimbusnetherlands.nl`.
-2. At your registrar, add a **CNAME** record: `www` → `<project>.pages.dev`.
-3. Use the registrar's forwarding/redirect to send `nimbusnetherlands.nl` → `https://www.nimbusnetherlands.nl`.
-4. Change `url` in `site.ts` and `SITE` in `astro.config.mjs` to the www address.
+- **Registrar:** TransIP. The nameservers point to Cloudflare (`adele.ns.cloudflare.com`, `dane.ns.cloudflare.com`).
+- **DNS:** managed in Cloudflare, under the zone `nimbusnetherlands.nl`.
+- **Connecting the site:** **Workers & Pages → nimbus → Domains → Add Domain**. Add `nimbusnetherlands.nl` and `www.nimbusnetherlands.nl`. Cloudflare creates the DNS records and SSL automatically.
+- **www → root redirect:** in the zone, go to **Rules → Redirect Rules → template "Redirect from WWW to root"** (301).
+- **Free email address:** in the zone, go to **Email → Email Routing** to forward `info@nimbusnetherlands.nl` to Gmail.
 
 After the domain works:
 
@@ -227,7 +198,8 @@ src/
   scripts/main.ts      ← menu, video player, filter, form, scroll animations
   styles/global.css    ← design tokens and base styles
 public/
-  fonts/               ← self-hosted Sora (OFL licence)
+  fonts/               ← self-hosted Outfit (headings) + Sora (body), OFL licence
+  brand/               ← logo files (SVG/PNG) for dark and light backgrounds
   video/               ← hero video + poster
   og/                  ← social share image
   robots.txt, _headers, favicon.svg
@@ -247,7 +219,8 @@ public/
 - [ ] **Hero video:** `public/video/hero.mp4` (+ poster), see the specs above
 - [x] **OG image:** Madeira still + logo. Swap for your favourite frame if you like.
 - [ ] **Formspree form ID** in `src/config/site.ts` (the form won't send until this is set)
-- [ ] **Domain:** connect `nimbusnetherlands.nl` to Cloudflare Pages
+- [ ] **Domain:** nameservers switched to Cloudflare. When the zone is Active, add the custom domains on the `nimbus` worker (see Deploying).
+- [ ] **TransIP owner details:** company name still says "Hyland". Change it under Gegevens beheren.
 - [ ] **Copy review:** check the bio, services, prices/inclusions and delivery times in `src/i18n/*.ts` and `src/data/services.ts`
 - [ ] **Equipment:** replace the example gear in `src/data/equipment.ts` with your actual setup
 - [ ] **Operator registration:** RDW operator number (optional) in `operatorId`, and check the certification sentence on the About page matches your certificates (A1/A3, A2)
