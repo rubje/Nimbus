@@ -22,7 +22,7 @@ Portfolio site for Ruben's FPV drone videography business (hotels, real estate, 
 ## Where things live
 - `src/config/site.ts`: brand, domain, email (`rubenvandv@gmail.com`), city, socials, `formspreeId` (`mnpjbgnb`, live), `cfAnalyticsToken`.
 - `src/data/videos.ts`: YouTube videos (4, all `featured`, max 4 shown on home); categories hotels/realestate/landscapes/concerts.
-- `src/data/services.ts`: hotels, realestate, weddings, events (`soon`) + process steps. `src/data/equipment.ts`: example gear.
+- `src/data/services.ts`: hotels, realestate, weddings, events (`soon`) + process steps. `src/data/equipment.ts`: real gear (DJI Avata 2, FPV Remote Controller 3 for manual mode, Goggles 3; editing in Camtasia, not DaVinci).
 - `src/i18n/nl.ts` / `en.ts`: all copy (NL default). `src/i18n/utils.ts`: translated slugs (`/werk/` ↔ `/en/work/`, `/diensten/`, `/over/`, `/contact/`, `/privacy/`).
 - `src/views/*.astro`: one view per page shared by both languages; `src/pages/**` are thin wrappers. `src/layouts/Base.astro`: head, SEO, hreflang, JSON-LD.
 - Components: Header (overlay on home, blur on `::before` so the fixed mobile menu isn't trapped), Logo, HeroVideo (renders `<video>` only if `public/video/hero.mp4` exists; poster = Madeira thumbnail), VideoCard (YouTube thumbs downloaded and optimised at build via `getImage`, click-to-load), VideoModal (`<dialog>`, youtube-nocookie, sized to viewport width AND height), WorkGrid (filter), ServiceCard (icon, 3 inclusions + link on home; full on services page), CTA, ContactForm (Formspree + honeypot), SEO, JsonLd.
@@ -40,4 +40,4 @@ Portfolio site for Ruben's FPV drone videography business (hotels, real estate, 
 - Destructive shell commands (rm -rf on node_modules etc.) may be denied by policy; prefer non-destructive alternatives.
 
 ## Open items (user to supply)
-Hero video (`public/video/hero.mp4`, H.264 1080p, 8–15 s, no audio, <5 MB), copy review, real equipment, RDW operator number, video year/location check, wedding videos, concert footage, optional phone/KvK/Instagram.
+Hero video (`public/video/hero.mp4`, H.264 1080p, 8–15 s, no audio, <5 MB), copy review, RDW operator number, video year/location check, wedding videos, concert footage, optional phone/KvK/Instagram.

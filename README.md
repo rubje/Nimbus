@@ -222,7 +222,7 @@ public/
 - [ ] **Domain:** nameservers switched to Cloudflare. When the zone is Active, add the custom domains on the `nimbus` worker (see Deploying).
 - [ ] **TransIP owner details:** company name still says "Hyland". Change it under Gegevens beheren.
 - [ ] **Copy review:** check the bio, services, prices/inclusions and delivery times in `src/i18n/*.ts` and `src/data/services.ts`
-- [ ] **Equipment:** replace the example gear in `src/data/equipment.ts` with your actual setup
+- [x] **Equipment:** DJI Avata 2, FPV Remote Controller 3, Goggles 3, Camtasia
 - [ ] **Operator registration:** RDW operator number (optional) in `operatorId`, and check the certification sentence on the About page matches your certificates (A1/A3, A2)
 - [ ] **Video details:** correct year/location/descriptions in `src/data/videos.ts`. Check whether the Oostmolen video belongs under Real estate.
 - [ ] **Business email:** consider `info@nimbusnetherlands.nl` instead of Gmail once the domain is live

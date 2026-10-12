@@ -1,21 +1,27 @@
-/** Equipment list on the About page. Replace with your actual gear. */
+/** Equipment list on the About page. */
 type L = { nl: string; en: string };
 
 export const equipment: { name: string; note: L }[] = [
   {
-    name: 'Cinewhoop (3,5")',
-    note: { nl: 'Binnenvluchten met propellerbescherming', en: 'Indoor flights with prop guards' },
+    name: 'DJI Avata 2',
+    note: {
+      nl: 'Compacte FPV-drone met ingebouwde propellerbescherming, veilig binnen en buiten. 4K-beeld, 10-bit D-Log M',
+      en: 'Compact FPV drone with built-in prop guards, safe indoors and out. 4K footage, 10-bit D-Log M',
+    },
   },
   {
-    name: '5" freestyle quad',
-    note: { nl: 'Snelle buitenshots en manual-mode lijnen', en: 'Fast exterior shots and manual-mode lines' },
+    name: 'DJI FPV Remote Controller 3',
+    note: {
+      nl: 'Volledig handmatige besturing (manual mode) voor vloeiende, precieze lijnen',
+      en: 'Full manual-mode control for smooth, precise lines',
+    },
   },
   {
-    name: 'DJI O4 / GoPro (4K, 10-bit)',
-    note: { nl: 'Stabiel beeld, ruimte voor kleurcorrectie', en: 'Stabilised footage with room to grade' },
+    name: 'DJI Goggles 3',
+    note: { nl: 'Live beeld vanuit de drone, tot op de centimeter', en: 'Live view from the drone, down to the centimetre' },
   },
   {
-    name: 'DaVinci Resolve',
-    note: { nl: 'Montage en kleurcorrectie', en: 'Editing and colour grading' },
+    name: 'Camtasia',
+    note: { nl: 'Montage en afwerking', en: 'Editing and finishing' },
   },
 ];
