@@ -95,6 +95,8 @@ Put your files in `public/video/`:
 | `hero-poster.jpg` | First frame / fallback image (shown instantly, and to reduced-motion users) |
 | `hero-poster-960.webp`, `hero-poster-1920.webp` | Optional lighter poster versions (recommended) |
 
+When you replace the poster images, bump `v` in `src/components/HeroVideo.astro` (e.g. `?v=3`): browsers cache `/video/*` for a week.
+
 The current poster is a frame from the La Vie en Rose thumbnail, used as a placeholder.
 
 **Recommended specs:**

@@ -20,14 +20,16 @@ const publicDir = path.join(process.cwd(), 'public');
 const has = (f: string) => fs.existsSync(path.join(publicDir, f));
 const hasMp4 = has('video/hero.mp4');
 const hasWebm = has('video/hero.webm');
-const poster = '/video/hero-poster.jpg';
+// /video/* is cached for a week: bump this when you replace the poster images.
+const v = '?v=2';
+const poster = `/video/hero-poster.jpg${v}`;
 const hasPosterWebp = has('video/hero-poster-960.webp') && has('video/hero-poster-1920.webp');
 ---
 
 <section class="hero">
   <div class="hero__media">
     <picture>
-      {hasPosterWebp && <source type="image/webp" srcset="/video/hero-poster-960.webp 960w, /video/hero-poster-1920.webp 1920w" sizes="100vw" />}
+      {hasPosterWebp && <source type="image/webp" srcset={`/video/hero-poster-960.webp${v} 960w, /video/hero-poster-1920.webp${v} 1920w`} sizes="100vw" />}
       <img class="hero__poster" src={poster} alt="" width="1920" height="1080" fetchpriority="high" decoding="async" />
     </picture>
     {
