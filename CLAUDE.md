@@ -4,7 +4,7 @@ Portfolio site for Ruben's FPV drone videography business (hotels, real estate, 
 
 ## Stack and commands
 - Astro 7 (static output), plain CSS, vanilla TS in `src/scripts/main.ts`. No framework runtime, no backend.
-- `npm run dev` (port 4321), `npm run build` (→ `dist/`, 13 pages), `npm run preview`.
+- `npm run dev` (port 4321), `npm run build` (→ `dist/`, 19 pages), `npm run preview`.
 - Node 22 (`.node-version`). Deps: astro, @astrojs/sitemap (sharp comes with astro).
 
 ## Hosting / deploy (live)
@@ -20,12 +20,16 @@ Portfolio site for Ruben's FPV drone videography business (hotels, real estate, 
 - TransIP registrant "Bedrijfsnaam" still says **Hyland**. The user should change it (Gegevens beheren).
 
 ## Where things live
-- `src/config/site.ts`: brand, domain, email (`rubenvandv@gmail.com`), city, socials, `formspreeId` (`mnpjbgnb`, live), `cfAnalyticsToken`.
+- `src/config/site.ts`: brand, domain, email (empty on purpose: the user doesn't want email/phone public, visitors use the form; set `info@` here once Email Routing exists), city, socials, `formspreeId` (`mnpjbgnb`, live), `cfAnalyticsToken`.
 - `src/data/videos.ts`: YouTube videos (4, all `featured`, max 4 shown on home); categories hotels/realestate/landscapes/concerts.
 - `src/data/services.ts`: hotels, realestate, weddings, events (`soon`) + process steps. `src/data/equipment.ts`: real gear (DJI Avata 2, FPV Remote Controller 3 for manual mode, Goggles 3; editing in Camtasia, not DaVinci).
-- `src/i18n/nl.ts` / `en.ts`: all copy (NL default). `src/i18n/utils.ts`: translated slugs (`/werk/` ↔ `/en/work/`, `/diensten/`, `/over/`, `/contact/`, `/privacy/`).
+- `src/i18n/nl.ts` / `en.ts` / `fr.ts`: all copy (NL default). `src/i18n/utils.ts`: languages, OG locales, translated slugs (`/werk/` ↔ `/en/work/` ↔ `/fr/realisations/`, etc.). Data files (`videos`, `services`, `equipment`) hold `{ nl, en, fr }` per string.
 - `src/views/*.astro`: one view per page shared by both languages; `src/pages/**` are thin wrappers. `src/layouts/Base.astro`: head, SEO, hreflang, JSON-LD.
 - Components: Header (overlay on home, blur on `::before` so the fixed mobile menu isn't trapped), Logo, HeroVideo (renders `<video>` only if `public/video/hero.mp4` exists; poster = Madeira thumbnail), VideoCard (YouTube thumbs downloaded and optimised at build via `getImage`, click-to-load), VideoModal (`<dialog>`, youtube-nocookie, sized to viewport width AND height), WorkGrid (filter), ServiceCard (icon, 3 inclusions + link on home; full on services page), CTA, ContactForm (Formspree + honeypot), SEO, JsonLd.
+
+## Security
+- CSP: Astro `security.csp` in `astro.config.mjs` emits a `<meta>` CSP with hashes for every script/style. **No inline `style=""` attributes** (they'd be blocked); use classes. Adding an external service (script, iframe, fetch) means adding it to the directives there.
+- `public/_headers`: frame-ancestors, HSTS, COOP, nosniff, Permissions-Policy (served by Workers static assets).
 
 ## Design decisions
 - Colours in `src/styles/global.css`: petrol `#0B3C49`, orange `#FF6A1A` (`--orange-text #FF7F3A` for small text, AA), off-white `#F4F1EC`, near-black `--black #030809`. Premium dark look: black sections, film grain (`body::after`), glows, card shadows.

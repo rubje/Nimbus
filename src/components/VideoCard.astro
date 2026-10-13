@@ -63,7 +63,7 @@ const watchUrl = `https://www.youtube.com/watch?v=${video.youtubeId}${video.star
     <div class="video-card__body">
       <Heading class="video-card__title">{title}</Heading>
       <p class="video-card__meta">
-        {t.categories[video.category]} · {video.location} · {video.year}
+        {t.categories[video.category]} · {video.location[lang]} · {video.year}
       </p>
       <p class="video-card__desc">{video.description[lang]}</p>
     </div>

@@ -21,7 +21,6 @@ const business: Record<string, unknown> = {
   alternateName: site.brand,
   description: t.meta.home.description,
   url: site.url,
-  email: site.email,
   image: new URL(site.ogImage, site.url).href,
   logo: new URL('/brand/nimbus-logo-512.png', site.url).href,
   address: {
@@ -31,9 +30,10 @@ const business: Record<string, unknown> = {
     addressCountry: site.country,
   },
   areaServed: { '@type': 'Country', name: 'Netherlands' },
-  knowsLanguage: ['nl', 'en'],
+  knowsLanguage: ['nl', 'en', 'fr'],
   sameAs: Object.values(site.socials).filter(Boolean),
 };
+if (site.email) business.email = site.email;
 if (site.phone) business.telephone = site.phone;
 if (site.kvk) business.identifier = { '@type': 'PropertyValue', propertyID: 'KvK', value: site.kvk };
 

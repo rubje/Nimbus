@@ -10,7 +10,11 @@ export const site = {
   /** Production URL, no trailing slash. Also set in astro.config.mjs. */
   url: 'https://nimbusnetherlands.nl',
 
-  email: 'rubenvandv@gmail.com',
+  /**
+   * Public email address shown on the site. Leave empty to hide it, so visitors
+   * use the contact form. Use a domain address (info@...), not a personal one.
+   */
+  email: '',
   /** Leave empty to hide. Example: '+31 6 12345678' */
   phone: '',
   /** Chamber of Commerce number. Leave empty to hide. */

@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import { useTranslations, path, routes, type Lang, type RouteKey } from '../i18n/utils';
+import { useTranslations, path, routes, langs, languages, type Lang, type RouteKey } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -10,7 +10,6 @@ interface Props {
 
 const { lang, route, overlay = false } = Astro.props;
 const t = useTranslations(lang);
-const other: Lang = lang === 'nl' ? 'en' : 'nl';
 const items: RouteKey[] = ['work', 'services', 'about', 'contact'];
 ---
 
@@ -26,7 +25,7 @@ const items: RouteKey[] = ['work', 'services', 'about', 'contact'];
     </button>
 
     <nav id="site-nav" class="site-nav" aria-label="Main" data-nav>
-      <ul>
+      <ul class="site-nav__links">
         {
           items.map((key) => (
             <li>
@@ -37,10 +36,18 @@ const items: RouteKey[] = ['work', 'services', 'about', 'contact'];
           ))
         }
       </ul>
-      <a class="lang-switch" href={routes[route][other]} hreflang={other} lang={other} title={t.nav.switchLang}>
-        <span aria-hidden="true">{other.toUpperCase()}</span>
-        <span class="visually-hidden">{t.nav.switchLang}</span>
-      </a>
+      <ul class="lang-switch" aria-label={t.nav.switchLang}>
+        {
+          langs.map((l) => (
+            <li>
+              <a href={routes[route][l]} hreflang={l} lang={l} aria-current={l === lang ? 'true' : undefined}>
+                <span aria-hidden="true">{l.toUpperCase()}</span>
+                <span class="visually-hidden">{languages[l]}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </nav>
   </div>
 </header>
@@ -62,14 +69,16 @@ const items: RouteKey[] = ['work', 'services', 'about', 'contact'];
   @media (max-width: 760px) { .site-header__logo :global(.logo) { height: 32px; width: auto; } }
 
   .site-nav { display: flex; align-items: center; gap: 2rem; }
-  .site-nav ul { display: flex; gap: 1.75rem; }
+  .site-nav__links { display: flex; gap: 1.75rem; }
   .site-nav a { text-decoration: none; font-weight: 450; font-size: 0.95rem; }
   .site-nav a[aria-current='page'] { color: var(--orange-text); }
-  .lang-switch {
-    border: 1px solid rgb(244 241 236 / 0.35); border-radius: 999px; padding: 0.3rem 0.75rem;
+  .lang-switch { display: flex; border: 1px solid rgb(244 241 236 / 0.35); border-radius: 999px; padding: 0.15rem; }
+  .lang-switch a {
+    display: block; border-radius: 999px; padding: 0.25rem 0.6rem; color: var(--muted);
     font-size: 0.8rem !important; letter-spacing: 0.08em; font-weight: 600 !important;
   }
-  .lang-switch:hover { border-color: var(--orange); }
+  .lang-switch a:hover { color: var(--offwhite); }
+  .site-nav .lang-switch a[aria-current='true'] { background: rgb(244 241 236 / 0.12); color: var(--offwhite); }
 
   .nav-toggle { display: none; }
 
@@ -94,15 +103,16 @@ const items: RouteKey[] = ['work', 'services', 'about', 'contact'];
       gap: 2.5rem; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
     }
     .site-nav.is-open { opacity: 1; visibility: visible; }
-    .site-nav ul { flex-direction: column; align-items: center; gap: 1.5rem; }
-    .site-nav ul a { font-size: var(--step-2); font-weight: 500; }
+    .site-nav__links { flex-direction: column; align-items: center; gap: 1.5rem; }
+    .site-nav__links a { font-size: var(--step-2); font-weight: 500; }
+    .lang-switch a { padding: 0.5rem 0.9rem; }
   }
   /* Without JS the menu is simply shown inline below the logo. */
   @media (max-width: 760px) {
     :global(html:not(.js)) .nav-toggle { display: none; }
     :global(html:not(.js)) .site-nav { position: static; opacity: 1; visibility: visible; background: none; flex-direction: row; flex-wrap: wrap; gap: 1rem; }
-    :global(html:not(.js)) .site-nav ul { flex-direction: row; flex-wrap: wrap; gap: 1rem; }
-    :global(html:not(.js)) .site-nav ul a { font-size: 1rem; }
+    :global(html:not(.js)) .site-nav__links { flex-direction: row; flex-wrap: wrap; gap: 1rem; }
+    :global(html:not(.js)) .site-nav__links a { font-size: 1rem; }
     :global(html:not(.js)) .site-header__inner { flex-wrap: wrap; padding-block: 0.75rem; }
   }
 </style>

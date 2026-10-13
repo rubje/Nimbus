@@ -27,7 +27,7 @@ const year = new Date().getFullYear();
     </nav>
     <div>
       <ul>
-        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
         {site.phone && <li><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a></li>}
         {site.socials.youtube && <li><a href={site.socials.youtube} rel="me noopener" target="_blank">YouTube ↗</a></li>}
         {site.socials.instagram && <li><a href={site.socials.instagram} rel="me noopener" target="_blank">Instagram ↗</a></li>}

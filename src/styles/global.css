@@ -110,6 +110,7 @@ ul { padding: 0; margin: 0; list-style: none; }
 /* ---------- Layout helpers ---------- */
 .container { width: min(100% - 2 * var(--gutter), var(--container)); margin-inline: auto; }
 .section { padding-block: var(--space-l); }
+.section--flush { padding-top: 0; }
 .section--deep {
   position: relative;
   background:

@@ -37,7 +37,7 @@ export default {
     menu: 'Menu',
     close: 'Sluiten',
     skip: 'Naar de inhoud',
-    switchLang: 'Switch to English',
+    switchLang: 'Taal',
   },
 
   categories: {
@@ -101,6 +101,7 @@ export default {
     certText:
       'Ik ben een geregistreerd drone-operator bij de RDW en vlieg met de vereiste EASA-certificering, binnen de regels van de open categorie. Ik ben verzekerd, en waar nodig regel ik vooraf toestemming met de locatie en de gemeente.',
     operatorLabel: 'Operatornummer',
+    photoAlt: 'Ruben met FPV-goggles en controller op een rots tussen de lupines in IJsland',
     gearTitle: 'Uitrusting',
     approachTitle: 'Werkwijze',
     approach: [
@@ -132,7 +133,7 @@ export default {
       submit: 'Verstuur aanvraag',
       sending: 'Versturen…',
       success: 'Bedankt! Je bericht is verstuurd. Je hoort binnen twee werkdagen van me.',
-      error: 'Er ging iets mis. Probeer het opnieuw of mail me direct.',
+      error: 'Er ging iets mis. Probeer het later opnieuw.',
       privacy: 'Je gegevens worden alleen gebruikt om je aanvraag te beantwoorden.',
     },
   },
@@ -140,6 +141,7 @@ export default {
   privacy: {
     title: 'Privacyverklaring',
     updated: 'Laatst bijgewerkt: oktober 2026',
+    contactLink: 'Contactformulier',
     sections: [
       {
         h: 'Geen tracking cookies',
@@ -159,7 +161,7 @@ export default {
       },
       {
         h: 'Je rechten',
-        p: 'Je kunt altijd vragen welke gegevens ik van je heb, en die laten aanpassen of verwijderen. Mail daarvoor naar het adres hieronder.',
+        p: 'Je kunt altijd vragen welke gegevens ik van je heb, en die laten aanpassen of verwijderen. Neem daarvoor contact op via het contactformulier.',
       },
     ],
   },

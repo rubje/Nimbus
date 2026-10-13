@@ -21,7 +21,7 @@ const t = useTranslations(lang);
     <p class="lead">{t.services.lead}</p>
   </section>
 
-  <section class="container section services" style="padding-top: 0">
+  <section class="container section services section--flush">
     {services.map((s, i) => <ServiceCard service={s} lang={lang} index={i} detailed headingLevel="h2" />)}
   </section>
 

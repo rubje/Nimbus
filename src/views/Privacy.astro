@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../config/site';
-import { useTranslations, type Lang } from '../i18n/utils';
+import { useTranslations, path, type Lang } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -16,7 +16,7 @@ const t = useTranslations(lang);
     <h1>{t.privacy.title}</h1>
     <p class="updated">{t.privacy.updated}</p>
   </section>
-  <section class="container section prose" style="padding-top: 0">
+  <section class="container section prose section--flush">
     {
       t.privacy.sections.map((s) => (
         <>
@@ -27,7 +27,7 @@ const t = useTranslations(lang);
     }
     <p>
       {site.legalName}, {site.city}<br />
-      <a href={`mailto:${site.email}`}>{site.email}</a>
+      {site.email ? <a href={`mailto:${site.email}`}>{site.email}</a> : <a href={path('contact', lang)}>{t.privacy.contactLink}</a>}
     </p>
   </section>
 </Base>

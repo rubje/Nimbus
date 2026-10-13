@@ -1,6 +1,6 @@
 ---
 import { site } from '../config/site';
-import { routes, type Lang, type RouteKey } from '../i18n/utils';
+import { routes, langs, locales, type Lang, type RouteKey } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -13,15 +13,13 @@ interface Props {
 const { lang, route, title, description, image = site.ogImage } = Astro.props;
 const canonical = site.url + routes[route][lang];
 const imageUrl = new URL(image, site.url).href;
-const locale = { nl: 'nl_NL', en: 'en_GB' };
-const other: Lang = lang === 'nl' ? 'en' : 'nl';
+const others = langs.filter((l) => l !== lang);
 ---
 
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
-<link rel="alternate" hreflang="nl" href={site.url + routes[route].nl} />
-<link rel="alternate" hreflang="en" href={site.url + routes[route].en} />
+{langs.map((l) => <link rel="alternate" hreflang={l} href={site.url + routes[route][l]} />)}
 <link rel="alternate" hreflang="x-default" href={site.url + routes[route].nl} />
 <link rel="sitemap" href="/sitemap-index.xml" />
 
@@ -33,8 +31,8 @@ const other: Lang = lang === 'nl' ? 'en' : 'nl';
 <meta property="og:image" content={imageUrl} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:locale" content={locale[lang]} />
-<meta property="og:locale:alternate" content={locale[other]} />
+<meta property="og:locale" content={locales[lang]} />
+{others.map((l) => <meta property="og:locale:alternate" content={locales[l]} />)}
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />

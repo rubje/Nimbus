@@ -39,7 +39,7 @@ const en: typeof nl = {
     menu: 'Menu',
     close: 'Close',
     skip: 'Skip to content',
-    switchLang: 'Naar Nederlands',
+    switchLang: 'Language',
   },
 
   categories: {
@@ -103,6 +103,7 @@ const en: typeof nl = {
     certText:
       'I’m a registered drone operator with the Dutch RDW and fly with the required EASA certification, within the rules of the open category. I’m insured, and where needed I arrange permission with the venue and municipality in advance.',
     operatorLabel: 'Operator number',
+    photoAlt: 'Ruben wearing FPV goggles and holding the controller, sitting on a rock among lupines in Iceland',
     gearTitle: 'Equipment',
     approachTitle: 'Approach',
     approach: [
@@ -134,7 +135,7 @@ const en: typeof nl = {
       submit: 'Send request',
       sending: 'Sending…',
       success: 'Thanks! Your message has been sent. You’ll hear from me within two working days.',
-      error: 'Something went wrong. Please try again or email me directly.',
+      error: 'Something went wrong. Please try again later.',
       privacy: 'Your details are only used to reply to your request.',
     },
   },
@@ -142,6 +143,7 @@ const en: typeof nl = {
   privacy: {
     title: 'Privacy policy',
     updated: 'Last updated: October 2026',
+    contactLink: 'Contact form',
     sections: [
       {
         h: 'No tracking cookies',
@@ -161,7 +163,7 @@ const en: typeof nl = {
       },
       {
         h: 'Your rights',
-        p: 'You can always ask what data I hold about you and have it corrected or deleted. Email the address below.',
+        p: 'You can always ask what data I hold about you and have it corrected or deleted. Just get in touch through the contact form.',
       },
     ],
   },

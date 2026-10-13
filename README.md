@@ -4,6 +4,7 @@ This is the static website for **Nimbus Netherlands**, built with [Astro](https:
 
 - Dutch is the default language (`/`, `/werk/`, `/diensten/`, `/over/`, `/contact/`, `/privacy/`)
 - English lives under `/en/` (`/en/work/`, `/en/services/`, `/en/about/`, `/en/contact/`, `/en/privacy/`)
+- French lives under `/fr/` (`/fr/realisations/`, `/fr/services/`, `/fr/a-propos/`, `/fr/contact/`, `/fr/confidentialite/`)
 
 ## Quick start
 
@@ -30,7 +31,7 @@ You never need to touch the components. Everything editable lives in these files
 | Portfolio videos | `src/data/videos.ts` |
 | Services, what's included, "how it works" steps | `src/data/services.ts` |
 | Equipment list (About page) | `src/data/equipment.ts` |
-| All other text: headings, intro, bio, contact text, privacy page, SEO titles and descriptions | `src/i18n/nl.ts` (Dutch) and `src/i18n/en.ts` (English) |
+| All other text: headings, intro, bio, contact text, privacy page, SEO titles and descriptions | `src/i18n/nl.ts` (Dutch), `src/i18n/en.ts` (English) and `src/i18n/fr.ts` (French) |
 | Colours, fonts, spacing | `src/styles/global.css` (variables at the top) |
 | URL slugs per language | `src/i18n/utils.ts` (`routes`) |
 
@@ -190,10 +191,10 @@ After the domain works:
 src/
   config/site.ts       ← business details and settings
   data/                ← videos, services, equipment
-  i18n/                ← nl.ts, en.ts (all copy) + utils.ts (routes/slugs)
+  i18n/                ← nl.ts, en.ts, fr.ts (all copy) + utils.ts (routes/slugs)
   components/          ← Header, Footer, Logo, HeroVideo, VideoCard, VideoModal, WorkGrid, …
   views/               ← one view per page, shared by both languages
-  pages/               ← Dutch pages; pages/en/ English pages (thin wrappers)
+  pages/               ← Dutch pages; pages/en/ and pages/fr/ (thin wrappers)
   layouts/Base.astro   ← <head>, SEO, hreflang, JSON-LD
   scripts/main.ts      ← menu, video player, filter, form, scroll animations
   styles/global.css    ← design tokens and base styles

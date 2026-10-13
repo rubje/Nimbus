@@ -19,18 +19,22 @@ const t = useTranslations(lang);
     <p class="lead">{t.contact.lead}</p>
   </section>
 
-  <section class="container section contact" style="padding-top: 0">
+  <section class="container section contact section--flush">
     <ContactForm lang={lang} />
     <aside class="contact__aside">
       <h2>{t.contact.quoteTitle}</h2>
       <ol class="quote-steps">
         {t.contact.quoteSteps.map((s) => <li>{s}</li>)}
       </ol>
-      <div class="contact__direct">
-        <p>{t.contact.emailLabel}</p>
-        <a href={`mailto:${site.email}`}>{site.email}</a>
-        {site.phone && <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a>}
-      </div>
+      {
+        (site.email || site.phone) && (
+          <div class="contact__direct">
+            <p>{t.contact.emailLabel}</p>
+            {site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
+            {site.phone && <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a>}
+          </div>
+        )
+      }
     </aside>
   </section>
 </Base>
