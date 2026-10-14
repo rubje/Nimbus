@@ -38,7 +38,7 @@ export const videos: Video[] = [
     },
   },
   {
-    youtubeId: 'GsvJfQgOj-c',
+    youtubeId: 'BffGNegjQeg',
     category: 'realestate',
     featured: true,
     year: 2026,

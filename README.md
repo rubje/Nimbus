@@ -44,12 +44,12 @@ You never need to touch the components. Everything editable lives in these files
 ## Adding a new video
 
 1. Upload the video to YouTube (public or unlisted).
-2. Copy the ID from the URL: `https://www.youtube.com/watch?v=`**`GsvJfQgOj-c`**
+2. Copy the ID from the URL: `https://www.youtube.com/watch?v=`**`BffGNegjQeg`**
 3. Add an entry to `src/data/videos.ts`:
 
 ```ts
 {
-  youtubeId: 'GsvJfQgOj-c',
+  youtubeId: 'BffGNegjQeg',
   category: 'hotels',          // 'hotels' | 'realestate' | 'landscapes' | 'concerts'
   featured: true,              // also show on the home page (first 3 featured are used)
   start: 57,                   // optional: start at 57 seconds
